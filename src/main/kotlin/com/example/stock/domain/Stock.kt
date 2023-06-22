@@ -7,12 +7,12 @@ import javax.persistence.Id
 
 @Entity
 class Stock(
-    private val productId: Long,
-    private var quantity: Long,
+    val productId: Long,
+    var quantity: Long,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private val id: Long? = null,
+    val id: Long? = null,
 ) {
 
     fun decrease(quantity: Long) {
@@ -20,9 +20,5 @@ class Stock(
             throw RuntimeException("foo")
         }
         this.quantity = this.quantity - quantity
-    }
-
-    fun getQuantity(): Long {
-        return quantity
     }
 }
