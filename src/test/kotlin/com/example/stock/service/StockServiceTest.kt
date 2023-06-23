@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 
 @SpringBootTest
 class StockServiceTest @Autowired constructor(
-    private val stockService: StockService,
+    private val stockService: PessimisticLockStockService,
     private val stockRepository: StockRepository,
 ) {
 
