@@ -10,7 +10,8 @@ class StockService(
     private val stockRepository: StockRepository,
 ) {
 
-    @Transactional
+//    @Transactional
+    @Synchronized
     fun decrease(id: Long, quantity: Long) {
         val stock: Stock = stockRepository.findById(id).orElseThrow{ IllegalArgumentException("Stock is Empty") }
 
