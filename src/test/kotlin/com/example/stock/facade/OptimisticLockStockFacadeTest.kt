@@ -1,8 +1,8 @@
-package com.example.stock.service
+package com.example.stock.facade
 
 import com.example.stock.domain.Stock
 import com.example.stock.repository.StockRepository
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,8 +13,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @SpringBootTest
-class StockServiceTest @Autowired constructor(
-    private val stockService: PessimisticLockStockService,
+class OptimisticLockStockFacadeTest @Autowired constructor(
+    val optimisticLockStockFacade: OptimisticLockStockFacade?,
     private val stockRepository: StockRepository,
 ) {
 
@@ -30,15 +30,6 @@ class StockServiceTest @Autowired constructor(
     }
 
     @Test
-    fun stock_decrease() {
-        stockService.decrease(1L, 1L)
-
-        val stock = stockRepository.findById(1L).orElseThrow()
-
-        assertThat(stock.quantity).isEqualTo(99)
-    }
-
-    @Test
     fun 동시에_100개의_요청() {
         val threadCount: Int = 100
         val executorService: ExecutorService = Executors.newFixedThreadPool(32)
@@ -47,7 +38,7 @@ class StockServiceTest @Autowired constructor(
         for (i in 1..threadCount) {
             executorService.submit {
                 try {
-                    stockService.decrease(1L, 1L)
+                    optimisticLockStockFacade!!.decrease(1L, 1L)
                 } finally {
                     latch.countDown()
                 }
@@ -57,6 +48,6 @@ class StockServiceTest @Autowired constructor(
 
         val stock = stockRepository.findById(1L).orElseThrow()
 
-        assertThat(stock.quantity).isEqualTo(0L)
+        Assertions.assertThat(stock.quantity).isEqualTo(0L)
     }
 }

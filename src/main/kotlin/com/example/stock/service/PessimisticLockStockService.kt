@@ -3,17 +3,16 @@ package com.example.stock.service
 import com.example.stock.domain.Stock
 import com.example.stock.repository.StockRepository
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class StockService(
+class PessimisticLockStockService(
     private val stockRepository: StockRepository,
 ) {
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     fun decrease(id: Long, quantity: Long) {
-        val stock: Stock = stockRepository.findById(id).orElseThrow{ IllegalArgumentException("Stock is Empty") }
+        val stock: Stock = stockRepository.findByIdWithPessimisticLock(id)
 
         stock.decrease(quantity)
 
