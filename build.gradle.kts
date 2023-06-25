@@ -25,7 +25,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
-//    implementation("org.redisson:redisson-spring-boot-starter:3.21.1")
+    implementation("org.redisson:redisson-spring-boot-starter:3.21.1")
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-web")
     // Kotlin
