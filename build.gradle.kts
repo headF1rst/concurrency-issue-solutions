@@ -20,11 +20,20 @@ repositories {
 }
 
 dependencies {
+    // JPA
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    // Redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.redisson:redisson-spring-boot-starter:3.21.1")
+    // Spring
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    // Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    // MySQL
     runtimeOnly("com.mysql:mysql-connector-j")
+    // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
